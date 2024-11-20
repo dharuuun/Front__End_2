@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment_2 Q_2</title>
+    <style>
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .calendar div {
+            padding: 20px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            background-color: #f4f4f4;
+        }
+
+        .calendar .selected {
+            background-color: #ff6347;
+            color: white;
+        }
+
+        .calendar .inactive {
+            background-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar" id="calendar"></div>
+
+    <script>
+        function generateCalendar() {
+            const calendarContainer = document.getElementById('calendar');
+            const date = new Date();
+            const month = date.getMonth();
+            const year = date.getFullYear();
+
+            date.setDate(1);
+            const firstDay = date.getDay();
+            const lastDay = new Date(year, month + 1, 0).getDate();
+
+            calendarContainer.innerHTML = '';
+
+            
+            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            daysOfWeek.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.textContent = day;
+                calendarContainer.appendChild(dayElement);
+            });
+
+            
+            for (let i = 0; i < firstDay; i++) {
+                calendarContainer.appendChild(document.createElement('div'));
+            }
+
+            
+            for (let i = 1; i <= lastDay; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.textContent = i;
+                dayElement.addEventListener('click', () => toggleDateSelection(dayElement));
+                calendarContainer.appendChild(dayElement);
+            }
+        }
+
+        function toggleDateSelection(dayElement) {
+            dayElement.classList.toggle('selected');
+        }
+
+        generateCalendar();
+    </script>
+</body>
+</html>

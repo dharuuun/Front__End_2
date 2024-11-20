@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment_2 Q_1</title>
+    <style>
+      .slider-container {
+        position: relative;
+        width: 300px;
+        height: 200px;
+        overflow: hidden;
+        margin: auto;
+        border: 2px solid #ccc;
+      }
+
+      .slider-images {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .slider-images img {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border: 2px solid transparent;
+      }
+
+      .slider-images img.active {
+        border: 2px solid #ff6347;
+      }
+
+      .button {
+        position: absolute;
+        top: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        border: none;
+        font-size: 18px;
+        transform: translateY(-50%);
+      }
+
+      .prev {
+        left: 10px;
+      }
+
+      .next {
+        right: 10px;
+      }
+
+      .disabled {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider-container">
+      <div class="slider-images">
+        <img src="img.jpg" class="active" alt="Image 1" />
+        <img src="img.jpg" alt="Image 2" />
+        <img src="img.jpg" alt="Image 3" />
+      </div>
+      <button class="button prev" onclick="moveSlide(-1)">&#10094;</button>
+      <button class="button next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+
+    <script>
+      let currentIndex = 0;
+      const images = document.querySelectorAll(".slider-images img");
+      const totalImages = images.length;
+
+      function moveSlide(direction) {
+        images[currentIndex].classList.remove("active");
+        currentIndex += direction;
+
+        if (currentIndex >= totalImages) {
+          currentIndex = 0;
+        } else if (currentIndex < 0) {
+          currentIndex = totalImages - 1;
+        }
+
+        images[currentIndex].classList.add("active");
+        updateButtonState();
+      }
+
+      function updateButtonState() {
+        document
+          .querySelector(".prev")
+          .classList.toggle("disabled", currentIndex === 0);
+        document
+          .querySelector(".next")
+          .classList.toggle("disabled", currentIndex === totalImages - 1);
+      }
+
+      setInterval(() => {
+        moveSlide(1);
+      }, 5000);
+
+      updateButtonState();
+    </script>
+  </body>
+</html>
